@@ -1,78 +1,67 @@
 import React, {Component} from 'react';
-import MyRoutes from '../config/routes'
-import Events from "../components/Events";
+import MyRoutes from '../config/routes';
 
 
-{/*<Events events={this.state.events}/></div>*/}
-// this.state.events.map(item => {
-//     <div className='calendar'>
-//         <div className="row">
-//             {this.state.event.title}
-//         </div>
-//         <div className="row">
-//             {this.state.event.day}
-//         </div>
-//         <div className="row">
-//             {this.state.event.time}
-//         </div>
-//     </div>
-// }
-
-
-const Event = (props) => {
-    return <div>I AM AN EVENT</div>
+class Event extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            events: this.props.events
+        }
+    }
+    render(){
+        let result = this.state.events.map((item, idx) => {
+            return(
+                        <div className='calendar' key={idx}>
+                            <div className="row">
+                                {item.title}
+                            </div>
+                            <div className="row">
+                                {item.day}
+                            </div>
+                            <div className="row">
+                                {item.time}
+                            </div>
+                        </div>
+                        )
+            })
+        return(
+            <div>
+               {result} 
+            </div>
+            )
+    }
 }
 
-
-
 class CalendarContainer extends Component{
-
-
 
     constructor() {
         super()
         this.state = {
-            events: []
+            events: [{
+                title:"walk dog",
+                day:"Tuesday",
+                time:"8:00AM"
+            },
+                {
+                    title:"do the dishes",
+                    day:"Monday",
+                    time:"8:00PM"
+                },
+                {
+                    title:"laundry",
+                    day:"Saturday",
+                    time:"8:00AM"
+                },
+                {
+                    title:"walk dog",
+                    day:"Thursday",
+                    time:"8:00AM"
+                }]
         }
     }
 
-    componentDidMount(){
-        const mockEvents=[{
-            title:"walk dog",
-            day:"Tuesday",
-            time:"8:00AM"
-        },
-            {
-                title:"do the dishes",
-                day:"Monday",
-                time:"8:00PM"
-            },
-            {
-                title:"laundry",
-                day:"Saturday",
-                time:"8:00AM"
-            },
-            {
-                title:"walk dog",
-                day:"Thursday",
-                time:"8:00AM"
-            }];
-
-        this.setState({events: mockEvents});
-        console.log(11, this.state)
-    }
-
-
-
     render(){
-
-        this.state.events.map(item => {
-            console.log('looping over item', item)
-            return (
-                <div>{item.title}</div>
-            )
-        })
-
         return(
             <div className="calContainer">
                 <p>Calendar Wrapper</p>
@@ -87,7 +76,7 @@ class CalendarContainer extends Component{
                         </div>
                         <div className="row">
                             <div className="col-sm row2"></div>
-                                <Event/>
+                                <Event events={this.state.events}/>
                             <div className="col-sm row2"></div>
                             <div className="col-sm row2"></div>
                             <div className="col-sm row2"></div>
