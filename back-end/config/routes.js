@@ -1,4 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var usersController = require('../controllers/users');
-var eventsController = require('../controllers/events');
+var users = require('../controllers/users');
+var events = require('../controllers/events');
+var app = express();
+
+app.get('/api/events', events.index)
+// app.get('/api/users', controllers.users.index)

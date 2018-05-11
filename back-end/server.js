@@ -1,7 +1,9 @@
 var express = require('express');
 var app = express();
 app.use(express.static('public'));
-var calendarRouter = require('./config/routes.js');
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+var routes = require('./config/routes');
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -10,12 +12,18 @@ app.use(function(req, res, next) {
     next();
 });
 
-var bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(calendarRouter);
 
-let port = process.env.PORT || 3000;
+app.get('/', function(req, res){
+	res.json(events)
+});
 
+//app.use(routes);
+
+
+
+
+
+let port = process.env.PORT || 3001;
 app.listen(port, function() {
     console.log(`Listening on port ${ port }`);
 });
