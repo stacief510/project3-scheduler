@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import MyRoutes from '../config/routes';
 
+
    let days = [{ 0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday'}];
         
     let createCalendar = (days, events) => {
@@ -83,9 +84,11 @@ class CalendarContainer extends Component{
                 }],
                 monday: [{title: 'walk dog mon'}],
                 tuesday: [{title: 'walk dog tue'}],
-                wednesday: [{title: 'walk dog wed'}, {title: 'walk dog FUCCCC'}],
-
-                
+                wednesday: [{title: 'walk dog'}, {title: 'walk dog'}],
+                thursday: [],
+                friday: [],
+                saturday: [],
+                sunday: []     
 
         }
     }
@@ -94,7 +97,11 @@ class CalendarContainer extends Component{
         const results = {
             monday:[],
             tuesday: [],
-            wednesday: []
+            wednesday: [],
+            thursday: [],
+            friday: [],
+            saturday: [],
+            sunday: [] 
         };
         this.state.events.forEach(event => {
             let day = event.day
@@ -117,28 +124,44 @@ class CalendarContainer extends Component{
         console.log('please gahd', this.massageData())
         return(
             <div className="calContainer">
-                <p>Calendar Wrapper</p>
+                <h1 className='title'>Weekly Scheduler</h1>
                 <div className="calendar">
                     <div className="container">
                         <div className="row">
-                            <div className="col-sm">Monday</div>
-                            <div className="col-sm">Tuesday</div>
-
-                            <div className="col-sm">Wednesday</div>
-                            <div className="col-sm">Thursday</div>
-                            <div className="col-sm">Friday</div>
+                            <div className="col-sm days">Monday</div>
+                            <div className="col-sm days">Tuesday</div>
+                            <div className="col-sm days">Wednesday</div>
+                            <div className="col-sm days">Thursday</div>
+                            <div className="col-sm days">Friday</div>
+                            <div className="col-sm days">Saturday</div>
+                            <div className="col-sm days">Sunday</div>
                         </div>
+
                         <div className="row">
-                            <div className="col-sm row2"></div>
-                            <Event events={this.state.monday} />
-                            <div className="col-sm row2"></div>
-                                                                <Event events={this.state.tuesday} />
+                            <div className="col-sm row2">
+                                <Event events={this.state.monday} />
+                            </div>
 
-                            <div className="col-sm row2"></div>
-                                                                                            <Event events={this.state.wednesday} />
+                            <div className="col-sm row2">
+                                 <Event events={this.state.tuesday} />
+                             </div>
 
-                            <div className="col-sm row2"></div>
-                            <div className="col-sm row2"></div>
+                            <div className="col-sm row2">
+                                <Event events={this.state.wednesday} />
+                            </div>
+
+                            <div className="col-sm row2">
+                                <Event events={this.state.thursday} />
+                            </div>
+                            <div className="col-sm row2">
+                                <Event events={this.state.friday} />
+                            </div>
+                            <div className="col-sm row2">
+                                <Event events={this.state.saturday} />
+                            </div>
+                            <div className="col-sm row2">
+                                <Event events={this.state.sunday} />
+                            </div>
                         </div>
                     </div>
                 </div>

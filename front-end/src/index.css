@@ -5,7 +5,22 @@ body {
 }
 .col-sm{
 	border: solid 1px black;
+	border-radius: 5px;
+	padding: 10px;
 }
 .row2{
 	height: 200px;
+}
+.row{
+	padding-left: 10px;
+}
+.days{
+	background-color: blue;
+	color: #fff;
+	text-align: center;
+	font-weight: bold;
+	font-size: 18px;
+}
+.title{
+	text-align: center;
 }
