@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import MyRoutes from '../config/routes';
+import axios from 'axios';
 
 
    let days = [{ 0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday'}];
@@ -23,6 +24,8 @@ class Event extends Component {
             events: this.props.events
         }
     } 
+
+
 
     render(){
         createCalendar(days,this.state.events);
@@ -168,6 +171,10 @@ class CalendarContainer extends Component{
                 {MyRoutes}
             </div>
             )
+    }
+
+    componentDidMount(){
+        let request = axios.get('http://localhost:3001/api/events');
     }
 }
 

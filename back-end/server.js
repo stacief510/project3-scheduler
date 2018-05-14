@@ -4,6 +4,8 @@ app.use(express.static('public'));
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 var routes = require('./config/routes');
+var eventsController = require('./controllers/events');
+var usersController = require('./controllers/users');
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -13,9 +15,11 @@ app.use(function(req, res, next) {
 });
 
 
-app.get('/', function(req, res){
-	res.json(events)
-});
+app.get('/events', eventsController.index)
+app.post('/events', eventsController.create)
+app.get('/events/:id', eventsController.show)
+
+
 
 //app.use(routes);
 

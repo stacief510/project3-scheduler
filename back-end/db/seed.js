@@ -1,4 +1,4 @@
-var db = require(./models);
+var db = require('../models');
 
 var events = [{
                     title:"walk dog",
@@ -24,11 +24,11 @@ var events = [{
                     title:"walk dog",
                     day:"thursday",
                     time:"8:00AM"
-                }]
+                }];
 
 db.Event.remove({}, function(err, removedEvents){
     db.Event.create(events, function(err, createdEvents){
         console.log('You created events', events);
         process.exit();
     });
-}
+});
