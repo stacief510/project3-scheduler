@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import MyRoutes from '../config/routes';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-
+import NewEvent from '../components/NewEvent';
 
    let days = [{ 0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday'}];
         
@@ -17,15 +17,27 @@ import axios from 'axios';
         return acc.day===curr.day;
     }
 
-
 class Event extends Component {
+    state={
+        event:[]
+    }
+    render(){
+        return(
+            <div>
+                <h1>hello</h1>
+            </div>
+        )
+    }
+}
+
+
+class Events extends Component {
     constructor(props) {
         super(props)
-        console.log('props', props)
-
     } 
 
     render(){
+
         createCalendar(days, this.props.events);
         let result = this.props.events.map((item, idx) => {
             return(
@@ -59,17 +71,14 @@ class CalendarContainer extends Component{
         super()
         this.state = {
             events: [],
-                monday: [],
-                tuesday: [],
-                wednesday: [],
-                thursday: [],
-                friday: [],
-                saturday: [],
-                sunday: [],
-                title:'',
-                day:'',
-                time:''     
-
+            monday: [],
+            tuesday: [],
+            wednesday: [],
+            thursday: [],
+            friday: [],
+            saturday: [],
+            sunday: [],
+            showForm: false
         }
     }
 
@@ -119,40 +128,14 @@ class CalendarContainer extends Component{
             })
     }
 
-    onSubmit=(event)=>{
-        event.preventDefault();
-        const {title, day, time} = this.state;
-        axios.post('http://localhost:3001/events', {title, day, time})
-            .then(res => {
-                let createdEvent = res.data;
-                console.log('old state', this.state)
-                this.setState({
-                    events: this.state.events.concat(createdEvent),
-                    time:'',
-                    day:'',
-                    title:''
-                })
-                this.massageData()
-                });
-
-        
-    }
-
-    handleTitleChange=(event)=>{
-        const value = event.target.value;
-        this.setState({title: value});
-    }
-
-    handleDayChange=(event)=>{
-        const value = event.target.value;
-        this.setState({day: value});
-    }
-    handleTimeChange=(event)=>{
-        const value = event.target.value;
-        this.setState({time: value}); 
+    toggleForm = () => {
+        this.setState({ showForm: !this.state.showForm })
     }
 
     render(){
+
+        let newEvent = this.state.showForm ? <NewEvent /> : null;
+
         return(
             <div className="calContainer">
                 <h1 className='title'>Weekly Scheduler</h1>
@@ -170,44 +153,35 @@ class CalendarContainer extends Component{
 
                         <div className="row">
                             <div className="col-sm row2">
-                                <Event events={this.state.monday} />
+                                <Events events={this.state.monday} />
                             </div>
 
                             <div className="col-sm row2">
-                                 <Event events={this.state.tuesday} />
+                                 <Events events={this.state.tuesday} />
                              </div>
 
                             <div className="col-sm row2">
-                                <Event events={this.state.wednesday} />
+                                <Events events={this.state.wednesday} />
                             </div>
 
                             <div className="col-sm row2">
-                                <Event events={this.state.thursday} />
+                                <Events events={this.state.thursday} />
                             </div>
                             <div className="col-sm row2">
-                                <Event events={this.state.friday} />
+                                <Events events={this.state.friday} />
                             </div>
                             <div className="col-sm row2">
-                                <Event events={this.state.saturday} />
+                                <Events events={this.state.saturday} />
                             </div>
                             <div className="col-sm row2">
-                                <Event events={this.state.sunday} />
+                                <Events events={this.state.sunday} />
                             </div>
                         </div>
 
                         <div className='row'>
-                            <Link to={'/events'} className='btn btn-secondary' type='submit'> Create New Event </Link>
+                            <button onClick={this.toggleForm}>Create New Event</button>
+                            { newEvent }
                         </div>
-
-                        <form onSubmit={this.onSubmit}>
-                            <label>Event:</label>
-                            <input type='text' name='title' placeholder='title' value={this.state.title} onChange={this.handleTitleChange}/>
-                            <label>Day:</label>
-                            <input type='text' name='day' placeholder='day' value={this.state.day} onChange={this.handleDayChange}/>
-                            <label>Time:</label>
-                            <input type='text' name='time' placeholder='time' value={this.state.time} onChange={this.handleTimeChange}/>
-                            <button type='submit'>Submit</button>
-                        </form>
 
                     </div>
                 </div>

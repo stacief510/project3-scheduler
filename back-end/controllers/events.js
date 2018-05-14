@@ -26,11 +26,9 @@ function create(req, res){
 
 function show(req, res){
 	console.log('GET one event')
-
 	console.log(`req.params.id: ${req.params.id}`);
 	db.Event.findById(req.params.id, function(err,foundEvent){
 		res.json(foundEvent);
-
 	});
 
 }
