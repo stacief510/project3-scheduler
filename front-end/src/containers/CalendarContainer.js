@@ -58,39 +58,17 @@ class CalendarContainer extends Component{
     constructor() {
         super()
         this.state = {
-                    events: [{
-                    title:"walk dog",
-                    day:"monday",
-                    time:"8:00AM"
-                },
-                {
-                    title:"do the dishes",
-                    day:"tuesday",
-                    time:"8:00PM"
-                },
-                {
-                    title:"laundry",
-                    day:"wednesday",
-                    time:"8:00AM"
-                },
-                {
-                    title:"laundry2",
-                    day:"wednesday",
-                    time:"9:00AM"
-                },
-                {
-                    title:"walk dog",
-                    day:"thursday",
-                    time:"8:00AM"
-                }],
-            // events: [],
-                monday: [{title: 'walk dog mon'}],
-                tuesday: [{title: 'walk dog tue'}],
-                wednesday: [{title: 'fake'}, {title: 'fake'}],
+            events: [],
+                monday: [],
+                tuesday: [],
+                wednesday: [],
                 thursday: [],
                 friday: [],
                 saturday: [],
-                sunday: []     
+                sunday: [],
+                title:'',
+                day:'',
+                time:''     
 
         }
     }
@@ -115,32 +93,64 @@ class CalendarContainer extends Component{
             }
         })
 
-        console.log(12321, results)
-
-
         this.setState({
             events: this.state.events,
+            monday: results.monday,
+            tuesday: results.tuesday,
+            wednesday: results.wednesday,
+            thursday: results.thursday,
             friday: results.friday,
-            wednesday: results.wednesday
+            saturday: results.saturday,
+            sunday: results.sunday
         })
 
 
 
     }
-        componentDidMount(){
+    componentDidMount(){
 
         let results = axios.get('http://localhost:3001/')
             .then((res)=>{
                 this.setState({
                     events: res.data
-                })
-                               
+                })          
                 this.massageData();
-
             }).then(() => {
             })
     }
 
+    onSubmit=(event)=>{
+        event.preventDefault();
+        const {title, day, time} = this.state;
+        axios.post('http://localhost:3001/events', {title, day, time})
+            .then(res => {
+                let createdEvent = res.data;
+                console.log('old state', this.state)
+                this.setState({
+                    events: this.state.events.concat(createdEvent),
+                    time:'',
+                    day:'',
+                    title:''
+                })
+                this.massageData()
+                });
+
+        
+    }
+
+    handleTitleChange=(event)=>{
+        const value = event.target.value;
+        this.setState({title: value});
+    }
+
+    handleDayChange=(event)=>{
+        const value = event.target.value;
+        this.setState({day: value});
+    }
+    handleTimeChange=(event)=>{
+        const value = event.target.value;
+        this.setState({time: value}); 
+    }
 
     render(){
         return(
@@ -188,6 +198,17 @@ class CalendarContainer extends Component{
                         <div className='row'>
                             <Link to={'/events'} className='btn btn-secondary' type='submit'> Create New Event </Link>
                         </div>
+
+                        <form onSubmit={this.onSubmit}>
+                            <label>Event:</label>
+                            <input type='text' name='title' placeholder='title' value={this.state.title} onChange={this.handleTitleChange}/>
+                            <label>Day:</label>
+                            <input type='text' name='day' placeholder='day' value={this.state.day} onChange={this.handleDayChange}/>
+                            <label>Time:</label>
+                            <input type='text' name='time' placeholder='time' value={this.state.time} onChange={this.handleTimeChange}/>
+                            <button type='submit'>Submit</button>
+                        </form>
+
                     </div>
                 </div>
                 {MyRoutes}
