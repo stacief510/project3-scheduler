@@ -5,6 +5,7 @@ import CalendarContainer from '../containers/CalendarContainer';
 export default(
 	<Switch>
 		<Route exact path='/' component={CalendarContainer}></Route>
+	    <Route exact path='/events' ></Route>
 	</Switch>
 )
 

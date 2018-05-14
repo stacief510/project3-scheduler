@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import MyRoutes from '../config/routes';
+import {Link} from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -7,8 +8,8 @@ import axios from 'axios';
         
     let createCalendar = (days, events) => {
         let calendar=days.map((day,idx,events)=>{
-            console.log(`day: ${day}`);
-            console.log(`event keys: ${Object.keys(events)}`);
+            // console.log(`day: ${day}`);
+            // console.log(`event keys: ${Object.keys(events)}`);
         })
     }
 
@@ -20,16 +21,13 @@ import axios from 'axios';
 class Event extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            events: this.props.events
-        }
+        console.log('props', props)
+
     } 
 
-
-
     render(){
-        createCalendar(days,this.state.events);
-        let result = this.state.events.map((item, idx) => {
+        createCalendar(days, this.props.events);
+        let result = this.props.events.map((item, idx) => {
             return(
                         <div className='calendar' key={idx}>
                             <div className="row">
@@ -60,7 +58,7 @@ class CalendarContainer extends Component{
     constructor() {
         super()
         this.state = {
-                events: [{
+                    events: [{
                     title:"walk dog",
                     day:"monday",
                     time:"8:00AM"
@@ -85,9 +83,10 @@ class CalendarContainer extends Component{
                     day:"thursday",
                     time:"8:00AM"
                 }],
+            // events: [],
                 monday: [{title: 'walk dog mon'}],
                 tuesday: [{title: 'walk dog tue'}],
-                wednesday: [{title: 'walk dog'}, {title: 'walk dog'}],
+                wednesday: [{title: 'fake'}, {title: 'fake'}],
                 thursday: [],
                 friday: [],
                 saturday: [],
@@ -108,23 +107,42 @@ class CalendarContainer extends Component{
         };
         this.state.events.forEach(event => {
             let day = event.day
+            let agenda = {};
 
             if (results[day]) {
-                results[day].push(event.title)
-                results[day].push(event.time)
+                agenda.title = event.title;
+                results[day].push(agenda)
             }
         })
 
-        // this.setState({
+        console.log(12321, results)
 
-        // })
+
+        this.setState({
+            events: this.state.events,
+            friday: results.friday,
+            wednesday: results.wednesday
+        })
 
 
 
     }
+        componentDidMount(){
+
+        let results = axios.get('http://localhost:3001/')
+            .then((res)=>{
+                this.setState({
+                    events: res.data
+                })
+                               
+                this.massageData();
+
+            }).then(() => {
+            })
+    }
+
 
     render(){
-        console.log('please gahd', this.massageData())
         return(
             <div className="calContainer">
                 <h1 className='title'>Weekly Scheduler</h1>
@@ -166,6 +184,10 @@ class CalendarContainer extends Component{
                                 <Event events={this.state.sunday} />
                             </div>
                         </div>
+
+                        <div className='row'>
+                            <Link to={'/events'} className='btn btn-secondary' type='submit'> Create New Event </Link>
+                        </div>
                     </div>
                 </div>
                 {MyRoutes}
@@ -173,9 +195,7 @@ class CalendarContainer extends Component{
             )
     }
 
-    componentDidMount(){
-        let request = axios.get('http://localhost:3001/api/events');
-    }
+
 }
 
 export default CalendarContainer;
