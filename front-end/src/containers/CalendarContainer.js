@@ -41,7 +41,8 @@ class CalendarContainer extends Component{
             let agenda = {};
 
             if (results[day]) {
-                agenda.title = event.title;
+                let id = event._id;
+                agenda.title = <Link to={`/events/${id}`}>{event.title}</Link>;
                 results[day].push(agenda)
             }
         })
