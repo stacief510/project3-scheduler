@@ -44,7 +44,7 @@ input{
 	background-color: rgb(185, 5, 29);
 	padding: 7px;
 }
-.singleEvent{
+.singleEvent, .updateEventForm{
 	border: 1px black solid;
 	justify-content: center;
 	width: 50%;
@@ -52,5 +52,11 @@ input{
 	padding: 15px;
 }
 .singleEvent h1{
-	text-transform: capitalize
+	text-transform: capitalize;
+}
+label{
+	font-weight: bold;
+	font-size: 18px;
+	margin-bottom: 0;
+	margin-top: 20px;
 }

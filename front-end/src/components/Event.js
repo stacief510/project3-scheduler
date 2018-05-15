@@ -38,13 +38,9 @@ class Event extends Component {
             event.preventDefault();
             const {title, day, time} = this.state;
             let oneEvent = this.props.match.params.id; 
-            // console.log('Event id = ', oneEvent)
-            // console.log('Event = ', title, day, time)
-
             axios.put(`http://localhost:3001/events/${oneEvent}`, {title, day, time})
                 .then(res => {
                     let updatedEvent = res.data;
-                    // console.log(updatedEvent)
                     this.setState({
                         time:updatedEvent.time,
                         day:updatedEvent.day,
@@ -92,16 +88,16 @@ class Event extends Component {
                 return(
                 <div className="updateEventForm" 
                     data-event-index= {this.props.match.params.id} >
-                    <form>
+                    <form className="form-group">
                         <label>Title:</label>
-                        <input onChange={this.handleTitleChange} type="text" className="row" value={this.state.title}/>
+                        <input className="form-control" onChange={this.handleTitleChange} type="text"  value={this.state.title}/>
                         <label>Day:</label>
-                        <input onChange={this.handleDayChange} type="text" className="row" value={this.state.day}/>
+                        <input className="form-control" onChange={this.handleDayChange} type="text"  value={this.state.day}/>
                         <label>Time:</label>
-                        <input onChange={this.handleTimeChange} type="text" className="row" value={this.state.time}/>
+                        <input className="form-control" onChange={this.handleTimeChange} type="text" value={this.state.time}/>
                         <button type="save" onClick={this.onSave}>Save Event</button>
                     </form>
-                    </div>
+                </div>
                 )
             }
     }
