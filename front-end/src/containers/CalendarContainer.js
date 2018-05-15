@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import NewEvent from '../components/NewEvent';
 import Events from '../components/Events';
-
+import Event from '../components/Event';
 
 class CalendarContainer extends Component{
 

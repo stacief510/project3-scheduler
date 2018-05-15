@@ -44,3 +44,13 @@ input{
 	background-color: rgb(185, 5, 29);
 	padding: 7px;
 }
+.singleEvent{
+	border: 1px black solid;
+	justify-content: center;
+	width: 50%;
+	margin: auto;
+	padding: 15px;
+}
+.singleEvent h1{
+	text-transform: capitalize
+}
