@@ -13,7 +13,7 @@ class newEvent extends Component {
 	                <input type='text' name='day' placeholder='day' value={this.props.day} onChange={this.props.handleDayChange}/>
 	                <label>Time:</label>
 	                <input type='text' name='time' placeholder='time' value={this.props.time} onChange={this.props.handleTimeChange}/>
-	                <button type='submit'>Submit</button>
+	                <button className="submit" type='submit'>Submit</button>
 	            </form>
 	        </div>
 			)

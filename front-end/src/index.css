@@ -24,3 +24,23 @@ body {
 .title{
 	text-align: center;
 }
+button{
+	background-color: rgb(29, 116, 216);
+	color: #fff;	
+	border-radius: 5px;
+	padding: 5px;
+	margin-top: 10px;
+}
+label{
+	margin: 8px;
+}
+input{
+	border: 1px black solid;
+	padding: 7px;
+	margin-top: 10px;
+}
+.submit{
+	margin-left: 20px;
+	background-color: rgb(185, 5, 29);
+	padding: 7px;
+}
