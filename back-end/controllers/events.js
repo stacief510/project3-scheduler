@@ -32,6 +32,23 @@ function show(req, res){
 	});
 }
 
+function update(req, res){
+	console.log('PUT one event')
+	console.log(`req.params.id: ${req.params.id}`);
+	db.Event.findById(req.params.id, function(err, foundEvent){
+		if (err) {
+            console.log(err);
+        } else {
+			foundEvent.title = req.body.title,
+			foundEvent.time = req.body.time,
+			foundEvent.day = req.body.day.toLowerCase(),
+
+			foundEvent.save()
+			res.json(foundEvent);
+		}
+	});
+}
+
 
 function destroy(req, res) {
     db.Event.findByIdAndRemove(req.params.id, function(err, foundEvent) {
@@ -46,5 +63,6 @@ module.exports = {
 	index: index,
 	create: create,
 	show: show,
+	update: update,
 	destroy: destroy
 }

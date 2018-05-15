@@ -3,15 +3,20 @@ import axios from 'axios';
 
 class Event extends Component {
         state={
-            events:[]
+            day: '',
+            time: '',
+            title: '',
+            editable: true
         }
    
         componentDidMount = () => {
             let oneEvent = this.props.match.params.id;
-            let results = axios.get(`http://localhost:3001/events/${oneEvent}`)
+            axios.get(`http://localhost:3001/events/${oneEvent}`)
             .then((res)=>{
                 this.setState({
-                    events: res.data
+                    day: res.data.day,
+                    time: res.data.time,
+                    title: res.data.title,
                 })  
             });  
         }
@@ -24,24 +29,81 @@ class Event extends Component {
                 })
 
         }
+        onEdit=()=>{
+            this.setState({
+                editable: false
+            })
+        }
+        onSave=(event)=>{
+            event.preventDefault();
+            const {title, day, time} = this.state;
+            let oneEvent = this.props.match.params.id; 
+            // console.log('Event id = ', oneEvent)
+            // console.log('Event = ', title, day, time)
 
+            axios.put(`http://localhost:3001/events/${oneEvent}`, {title, day, time})
+                .then(res => {
+                    let updatedEvent = res.data;
+                    // console.log(updatedEvent)
+                    this.setState({
+                        time:updatedEvent.time,
+                        day:updatedEvent.day,
+                        title:updatedEvent.title,
+                        editable: true,
+                    })
+                });
+        }
+
+        handleTitleChange=(event)=>{
+            const value = event.target.value;
+            this.setState({title: value});
+        }
+    
+        handleDayChange=(event)=>{
+            const value = event.target.value;
+            this.setState({day: value});
+        }
+        handleTimeChange=(event)=>{
+            const value = event.target.value;
+            this.setState({time: value}); 
+        }
+    
         render(){
-        return(
-            <div className="singleEvent" data-event-index= {this.props.match.params.id} >
+            console.log(111, this.props)
+            console.log(222, this.state)
+            if(this.state.editable){
+                return(
+                <div className="singleEvent" data-event-index= {this.props.match.params.id} >
                     <h1 className="row">
-                       Event: {this.state.events.title}
+                    Event: {this.state.title} 
                     </h1>
                     <h1 className="row">
-                       Day: {this.state.events.day}
+                    Day: {this.state.day}
                     </h1>
                     <h1 className="row">
-                       Time: {this.state.events.time}
+                    Time: {this.state.time}
                     </h1>
                     <button type="delete" onClick={this.onDelete}>Delete Event</button>
                     <button type="edit" onClick={this.onEdit}>Edit Event</button>
-
-            </div>
-        )
+                </div>
+                )
+            }
+            else{
+                return(
+                <div className="updateEventForm" 
+                    data-event-index= {this.props.match.params.id} >
+                    <form>
+                        <label>Title:</label>
+                        <input onChange={this.handleTitleChange} type="text" className="row" value={this.state.title}/>
+                        <label>Day:</label>
+                        <input onChange={this.handleDayChange} type="text" className="row" value={this.state.day}/>
+                        <label>Time:</label>
+                        <input onChange={this.handleTimeChange} type="text" className="row" value={this.state.time}/>
+                        <button type="save" onClick={this.onSave}>Save Event</button>
+                    </form>
+                    </div>
+                )
+            }
     }
 }
 

@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import NewEvent from '../components/NewEvent';
 import Events from '../components/Events';
-import Event from '../components/Event';
 
 class CalendarContainer extends Component{
 
@@ -40,9 +39,21 @@ class CalendarContainer extends Component{
             let day = event.day
             let agenda = {};
 
+
+
+
             if (results[day]) {
                 let id = event._id;
-                agenda.title = <Link to={`/events/${id}`}>{event.title}</Link>;
+
+                let eventDetails = { 
+                    pathname: `/events/${id}`, 
+                    param1: "findme!",
+                    state: { foo: 'bar'} 
+                  };
+                
+                agenda.title = <Link 
+                    to={eventDetails}
+                    >{event.title}</Link>;
                 results[day].push(agenda)
             }
         })
