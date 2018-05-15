@@ -4,7 +4,7 @@ body {
   font-family: sans-serif;
 }
 .col-sm{
-	border: solid 1px black;
+	border: solid 1px rgba(24, 24, 24, 0.952);
 	border-radius: 5px;
 	padding: 10px;
 }
@@ -15,7 +15,7 @@ body {
 	padding-left: 10px;
 }
 .days{
-	background-color: blue;
+	background-color: rgb(29, 116, 216);
 	color: #fff;
 	text-align: center;
 	font-weight: bold;

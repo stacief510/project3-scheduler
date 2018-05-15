@@ -1,68 +1,9 @@
 import React, {Component} from 'react';
-import MyRoutes from '../config/routes';
+// import MyRoutes from '../config/routes';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import NewEvent from '../components/NewEvent';
-
-   let days = [{ 0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday'}];
-        
-    let createCalendar = (days, events) => {
-        let calendar=days.map((day,idx,events)=>{
-            // console.log(`day: ${day}`);
-            // console.log(`event keys: ${Object.keys(events)}`);
-        })
-    }
-
-    let reducer=(curr,acc)=>{
-        return acc.day===curr.day;
-    }
-
-class Event extends Component {
-    state={
-        event:[]
-    }
-    render(){
-        return(
-            <div>
-                <h1>hello</h1>
-            </div>
-        )
-    }
-}
-
-
-class Events extends Component {
-    constructor(props) {
-        super(props)
-    } 
-
-    render(){
-
-        createCalendar(days, this.props.events);
-        let result = this.props.events.map((item, idx) => {
-            return(
-                        <div className='calendar' key={idx}>
-                            <div className="row">
-                                {item.title}
-                            </div>
-                            <div className="row">
-                                {item.day}
-                            </div>
-                            <div className="row">
-                                {item.time}
-                            </div>
-                        </div>
-                        )
-            })
-        return(
-            <div>
-               {result} 
-            </div>
-            )
-    }
-}
-
-
+import Events from '../components/Events';
 
 
 class CalendarContainer extends Component{
@@ -78,11 +19,15 @@ class CalendarContainer extends Component{
             friday: [],
             saturday: [],
             sunday: [],
-            showForm: false
+            showForm: false,
+            title: '',
+            day: '',
+            time: ''
         }
     }
 
      massageData = () => {
+        console.log('massaging data');
         const results = {
             monday:[],
             tuesday: [],
@@ -113,6 +58,8 @@ class CalendarContainer extends Component{
             sunday: results.sunday
         })
 
+        console.log(this.state, 'massage complete');
+
 
 
     }
@@ -132,9 +79,39 @@ class CalendarContainer extends Component{
         this.setState({ showForm: !this.state.showForm })
     }
 
+    onSubmit=(event)=>{
+        event.preventDefault();
+        const {title, day, time} = this.state;
+        axios.post('http://localhost:3001/events', {title, day, time})
+            .then(res => {
+                let createdEvent = res.data;
+                this.setState({
+                    events: this.state.events.concat(createdEvent),
+                    time:'',
+                    day:'',
+                    title:''
+                })
+                this.massageData()
+                });
+    }
+
+    handleTitleChange=(event)=>{
+        const value = event.target.value;
+        this.setState({title: value});
+    }
+
+    handleDayChange=(event)=>{
+        const value = event.target.value;
+        this.setState({day: value});
+    }
+    handleTimeChange=(event)=>{
+        const value = event.target.value;
+        this.setState({time: value}); 
+    }
+
     render(){
 
-        let newEvent = this.state.showForm ? <NewEvent /> : null;
+        let newEvent = this.state.showForm ? <NewEvent onSubmit={this.onSubmit} handleDayChange={this.handleDayChange} handleTimeChange={this.handleTimeChange} handleTitleChange={this.handleTitleChange} massageData={this.massageData} title={this.state.title} day={this.state.day} time={this.state.time}/> : null;
 
         return(
             <div className="calContainer">
@@ -185,7 +162,7 @@ class CalendarContainer extends Component{
 
                     </div>
                 </div>
-                {MyRoutes}
+                {/* {MyRoutes} */}
             </div>
             )
     }
