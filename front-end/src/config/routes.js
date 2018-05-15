@@ -1,12 +1,20 @@
 import React from 'react';
-import {Switch, Route} from 'react-router-dom';
+import {Link, Switch, Route} from 'react-router-dom';
 import CalendarContainer from '../containers/CalendarContainer';
-import Event from '../components/Event'
+import Event from '../components/Event';
+import Home from '../components/Home';
 
 export default(
-	<Switch>
-		<Route exact path='/' component={CalendarContainer}></Route>
-		<Route exact path='/events/:id'component={Event}></Route>
-	</Switch>
+	<div>
+        <nav>
+            <h1>Users</h1>
+            <Link to="/users">Users</Link>
+        </nav>
+		<Switch>
+            <Route exact path='/users' component={Home}></Route>
+			<Route exact path='/users/:id/events' component={CalendarContainer}></Route>
+			<Route exact path='/users/:id/events/:id'component={Event}></Route>
+		</Switch>
+	</div>
 )
 

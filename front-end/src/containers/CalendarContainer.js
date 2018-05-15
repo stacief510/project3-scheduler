@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import NewEvent from '../components/NewEvent';
 import Events from '../components/Events';
+import Home from '../components/Home';
 
 class CalendarContainer extends Component{
 
@@ -35,18 +36,15 @@ class CalendarContainer extends Component{
             saturday: [],
             sunday: [] 
         };
-        this.state.events.forEach(event => {
+        this.state.events.forEach((user,event) => {
             let day = event.day
             let agenda = {};
 
-
-
-
             if (results[day]) {
                 let id = event._id;
-
+                let userId = user._id;
                 let eventDetails = { 
-                    pathname: `/events/${id}`, 
+                    pathname: `users/${userId}/events/${id}`,
                     param1: "findme!",
                     state: { foo: 'bar'} 
                   };
@@ -72,17 +70,17 @@ class CalendarContainer extends Component{
         console.log(this.state, 'massage complete');
 
     }
-    componentDidMount(){
-
-        let results = axios.get('http://localhost:3001/')
-            .then((res)=>{
-                this.setState({
-                    events: res.data
-                })          
-                this.massageData();
-            }).then(() => {
-            })
-    }
+    // componentDidMount(){
+    //
+    //    axios.get('http://localhost:3001/events')
+    //         .then((res)=>{
+    //             this.setState({
+    //                 events: res.data
+    //             })
+    //             this.massageData();
+    //         }).then(() => {
+    //         })
+    // }
 
     toggleForm = () => {
         this.setState({ showForm: !this.state.showForm })
