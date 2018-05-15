@@ -14,8 +14,11 @@ app.use(function(req, res, next) {
     next();
 });
 
+app.get('/users', usersController.index)
+app.post('/users', usersController.create)
+app.get('/users/:id', usersController.show)
 
-app.get('/', eventsController.index)
+app.get('/events', eventsController.index)
 app.post('/events', eventsController.create)
 app.get('/events/:id', eventsController.show)
 app.delete('/events/:id', eventsController.destroy)
