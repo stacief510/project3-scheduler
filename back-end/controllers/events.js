@@ -30,11 +30,21 @@ function show(req, res){
 	db.Event.findById(req.params.id, function(err,foundEvent){
 		res.json(foundEvent);
 	});
+}
 
+
+function destroy(req, res) {
+    db.Event.findByIdAndRemove(req.params.id, function(err, foundEvent) {
+        if (err) {
+            console.log(err);
+        }
+        res.send("post deleted");
+    });
 }
 
 module.exports = {
 	index: index,
 	create: create,
-	show: show
+	show: show,
+	destroy: destroy
 }

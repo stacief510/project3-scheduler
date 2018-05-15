@@ -6,7 +6,6 @@ import Event from '../components/Event'
 export default(
 	<Switch>
 		<Route exact path='/' component={CalendarContainer}></Route>
-		{/* <Route exact path='/'component={Event}></Route> */}
 		<Route exact path='/events/:id'component={Event}></Route>
 	</Switch>
 )

@@ -18,6 +18,8 @@ app.use(function(req, res, next) {
 app.get('/', eventsController.index)
 app.post('/events', eventsController.create)
 app.get('/events/:id', eventsController.show)
+app.delete('/events/:id', eventsController.destroy)
+
 
 
 

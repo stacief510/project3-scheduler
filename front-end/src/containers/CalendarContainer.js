@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-// import MyRoutes from '../config/routes';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import NewEvent from '../components/NewEvent';
@@ -162,7 +161,6 @@ class CalendarContainer extends Component{
 
                     </div>
                 </div>
-                {/* {MyRoutes} */}
             </div>
             )
     }
