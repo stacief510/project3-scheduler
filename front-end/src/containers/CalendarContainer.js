@@ -59,8 +59,6 @@ class CalendarContainer extends Component{
 
         console.log(this.state, 'massage complete');
 
-
-
     }
     componentDidMount(){
 
@@ -164,8 +162,6 @@ class CalendarContainer extends Component{
             </div>
             )
     }
-
-
 }
 
 export default CalendarContainer;

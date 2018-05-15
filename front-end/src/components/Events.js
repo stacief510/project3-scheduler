@@ -5,8 +5,6 @@ let days = [{ 0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursd
         
 let createCalendar = (days, events) => {
     let calendar=days.map((day,idx,events)=>{
-        // console.log(`day: ${day}`);
-        // console.log(`event keys: ${Object.keys(events)}`);
     })
 }
 let reducer=(curr,acc)=>{

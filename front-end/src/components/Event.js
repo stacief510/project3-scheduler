@@ -15,14 +15,15 @@ class Event extends Component {
                 })  
             });  
         }
-        // onDelete(){
-        //     let oneEvent = this.props.match.params.id; 
-        //     axios.delete(`http://localhost:3001/events/${oneEvent}`, 
-        //         .then((res) =>{
-        //             res.data;
-        //         })
-        //     )
-        // }
+
+        onDelete = () => {
+            let oneEvent = this.props.match.params.id; 
+            axios.delete(`http://localhost:3001/events/${oneEvent}`, {data: {id: oneEvent}})
+                .then(res => {
+                    this.props.history.push('/');
+                })
+
+        }
 
         render(){
         return(
@@ -36,8 +37,8 @@ class Event extends Component {
                     <h1 className="row">
                        Time: {this.state.events.time}
                     </h1>
-                    <button type="delete" onDelete={this.onDelete}>Delete Event</button>
-                    <button type="edit" onEdit={this.onEdit}>Edit Event</button>
+                    <button type="delete" onClick={this.onDelete}>Delete Event</button>
+                    <button type="edit" onClick={this.onEdit}>Edit Event</button>
 
             </div>
         )
