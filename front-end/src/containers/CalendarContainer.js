@@ -70,17 +70,17 @@ class CalendarContainer extends Component{
         console.log(this.state, 'massage complete');
 
     }
-    // componentDidMount(){
-    //
-    //    axios.get('http://localhost:3001/events')
-    //         .then((res)=>{
-    //             this.setState({
-    //                 events: res.data
-    //             })
-    //             this.massageData();
-    //         }).then(() => {
-    //         })
-    // }
+    componentDidMount(){
+
+       axios.get('http://localhost:3001/events')
+            .then((res)=>{
+                this.setState({
+                    events: res.data
+                })
+                this.massageData();
+            }).then(() => {
+            })
+    }
 
     toggleForm = () => {
         this.setState({ showForm: !this.state.showForm })
