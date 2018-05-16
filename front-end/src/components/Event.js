@@ -29,11 +29,13 @@ class Event extends Component {
                 })
 
         }
+
         onEdit=()=>{
             this.setState({
                 editable: false
             })
         }
+
         onSave=(event)=>{
             event.preventDefault();
             const {title, day, time} = this.state;

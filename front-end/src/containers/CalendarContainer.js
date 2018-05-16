@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import NewEvent from '../components/NewEvent';
 import Events from '../components/Events';
-import Home from '../components/Home';
 
 class CalendarContainer extends Component{
 
@@ -26,7 +25,6 @@ class CalendarContainer extends Component{
     }
 
      massageData = () => {
-        console.log('massaging data');
         const results = {
             monday:[],
             tuesday: [],
@@ -44,9 +42,7 @@ class CalendarContainer extends Component{
                 let id = event._id;
                 let userId = user._id;
                 let eventDetails = { 
-                    pathname: `users/${userId}/events/${id}`,
-                    param1: "findme!",
-                    state: { foo: 'bar'} 
+                    pathname: `/users/${userId}/events/${id}`,
                   };
                 
                 agenda.title = <Link 
@@ -66,14 +62,12 @@ class CalendarContainer extends Component{
             saturday: results.saturday,
             sunday: results.sunday
         })
-
-        console.log(this.state, 'massage complete');
-
     }
-    componentDidMount(){
 
-       axios.get('http://localhost:3001/events')
+    componentDidMount(){
+        axios.get(`http://localhost:3001/users/${this.props.match.params.id}`)
             .then((res)=>{
+                console.log(res.data)
                 this.setState({
                     events: res.data
                 })
@@ -119,7 +113,6 @@ class CalendarContainer extends Component{
     render(){
 
         let newEvent = this.state.showForm ? <NewEvent onSubmit={this.onSubmit} handleDayChange={this.handleDayChange} handleTimeChange={this.handleTimeChange} handleTitleChange={this.handleTitleChange} massageData={this.massageData} title={this.state.title} day={this.state.day} time={this.state.time}/> : null;
-
         return(
             <div className="calContainer">
                 <h1 className='title'>Weekly Scheduler</h1>
