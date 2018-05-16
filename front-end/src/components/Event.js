@@ -84,7 +84,7 @@ class Event extends Component {
                     Day: {this.state.day}
                     </h1>
                     <h1 className="row">
-                    Time: {this.state.time}
+                    Time: { this.state.time }
                     </h1>
                     <button type="delete" onClick={this.onDelete}>Delete Event</button>
                     <button type="edit" onClick={this.onEdit}>Edit Event</button>
