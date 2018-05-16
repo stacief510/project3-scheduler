@@ -3,12 +3,15 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import NewEvent from '../components/NewEvent';
 import Events from '../components/Events';
+import Moment from 'moment';
+import Moment2 from 'react-moment';
 
 class CalendarContainer extends Component{
 
     constructor() {
         super()
         this.state = {
+            dates: [],
             events: [],
             monday: [],
             tuesday: [],
@@ -42,7 +45,6 @@ class CalendarContainer extends Component{
             let agenda = {};
 
             if (results[day]) {
-                console.log(`in if loop results[day]: ${results[day]}`);
                 let id = event._id;
                 let userId = event.user_id;
                 let eventDetails = { 
@@ -74,11 +76,14 @@ class CalendarContainer extends Component{
                 console.log(res.data)
                 this.setState({
                     events: res.data,
-                    user_id: this.props.match.params.id
+                    user_id: this.props.
+                    match.params.id
                 })
                 this.massageData();
             }).then(() => {
+                 
             })
+            // this.getCurrentDate();
     }
 
     toggleForm = () => {
@@ -118,7 +123,26 @@ class CalendarContainer extends Component{
         this.setState({time: value}); 
     }
 
+    getCurrentDate=()=>{
+        const startWeek = Moment().startOf('week');
+        const endWeek = Moment().endOf('week');
+        
+        var date = startWeek.subtract(1, 'day');
+        var holder=[];
+        while (startWeek.isBefore(endWeek,'day')){
+            holder.push({
+                days: Array(7).fill(0).map(()=> date.add(1, 'day').clone())
+            })
+        }
+        return holder;
+    }
+
     render(){
+        let testing = this.getCurrentDate();
+        let dateResults = testing[0].days.map(day => {
+            return <div className="col-sm days">{`${day._d}`}</div>
+        })
+        
         let newEvent = this.state.showForm ? <NewEvent onSubmit={this.onSubmit} handleDayChange={this.handleDayChange} handleTimeChange={this.handleTimeChange} handleTitleChange={this.handleTitleChange} massageData={this.massageData} title={this.state.title} day={this.state.day} time={this.state.time}/> : null;
         return(
             <div className="calContainer">
@@ -126,16 +150,13 @@ class CalendarContainer extends Component{
                 <div className="calendar">
                     <div className="container">
                         <div className="row">
-                            <div className="col-sm days">Monday</div>
-                            <div className="col-sm days">Tuesday</div>
-                            <div className="col-sm days">Wednesday</div>
-                            <div className="col-sm days">Thursday</div>
-                            <div className="col-sm days">Friday</div>
-                            <div className="col-sm days">Saturday</div>
-                            <div className="col-sm days">Sunday</div>
+                            {dateResults}
                         </div>
 
                         <div className="row">
+                            <div className="col-sm row2">
+                                <Events events={this.state.sunday} />
+                            </div>
                             <div className="col-sm row2">
                                 <Events events={this.state.monday} />
                             </div>
@@ -156,9 +177,6 @@ class CalendarContainer extends Component{
                             </div>
                             <div className="col-sm row2">
                                 <Events events={this.state.saturday} />
-                            </div>
-                            <div className="col-sm row2">
-                                <Events events={this.state.sunday} />
                             </div>
                         </div>
 
