@@ -1,50 +1,53 @@
 var db = require('../models');
 
-var user1Events = [{
+var events = [{
                     title:"walk dog",
                     day:"monday",
-                    time:"8:00AM"
+                    time:"8:00AM",
+                    user_id: null,
                 },
                 {
                     title:"do the dishes",
                     day:"tuesday",
-                    time:"8:00PM"
+                    time:"8:00PM",
+                    user_id: null,
                 },
                 {
                     title:"laundry",
                     day:"wednesday",
-                    time:"8:00AM"
-                }]
-
-var user2Events =[
+                    time:"8:00AM",
+                    user_id: null,
+                },
                 {
                     title:"Play with the ball",
                     day:"wednesday",
-                    time:"9:00AM"
+                    time:"9:00AM",
+                    user_id: null,
                 },
                 {
                     title:"Take a nap",
                     day:"thursday",
-                    time:"8:00AM"
+                    time:"8:00AM",
+                    user_id: null,
                 }];
 
-var users=[{name: "Mark", age: 39, occupation:"Developer", events:user1Events},
-    {name: "Charlie", age: 3, occupation:"Loyal dog", events:user2Events}];
+var users=[{name: "Mark", age: 39, occupation:"Developer"},
+    {name: "Charlie", age: 3, occupation:"Loyal dog"}];
 
 db.User.remove({}, function(err, removedUsers){
     db.User.create(users, function(err, createdUsers){
-        console.log('You created users', users);
-        process.exit();
+        events.forEach(event => {
+            event.user_id = createdUsers[0]._id;
+        })
+
+    db.Event.remove({}, function(err, removedEvents) {
+        db.Event.create(events, function (err, createdEvents) {
+            console.log('You created events', createdEvents);
+            process.exit();
+        });
+    });
+
     });
 });
 
-db.Event.remove({}, function(err, removedEvents) {
-    db.Event.create(user1Events, function (err, createdEvents) {
-        console.log('You created events', user1Events);
 
-    });
-
-    db.Event.create(user2Events, function (err, createdEvents) {
-        console.log('You created events', user2Events);
-    });
-});
