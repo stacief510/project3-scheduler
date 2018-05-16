@@ -34,7 +34,9 @@ class CalendarContainer extends Component{
             saturday: [],
             sunday: [] 
         };
+
         this.state.events.forEach((user,event) => {
+            console.log(`user: ${user}, event: ${event}`)
             let day = event.day
             let agenda = {};
 
@@ -65,7 +67,7 @@ class CalendarContainer extends Component{
     }
 
     componentDidMount(){
-        axios.get(`http://localhost:3001/users/${this.props.match.params.id}`)
+        axios.get(`http://localhost:3001/users/${this.props.match.params.id}/events`)
             .then((res)=>{
                 console.log(res.data)
                 this.setState({
