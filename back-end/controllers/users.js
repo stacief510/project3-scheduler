@@ -27,10 +27,34 @@ function show(req, res){
     db.User.findById(req.params.id, function(err,foundUser){
         res.json(foundUser);
     });
+    db.User
+        .findOne({_id:req.params.id})
+        .populate('events')
+        .exec(function(err, events) {
+            if (err) {
+                res.status(500).send(err);
+            }
+            console.log('found and populated all events: ', events);
+            res.json(events);
+        });
 }
+
+function userEvents(req, res){
+    console.log('GET user and events')
+    console.log(`req.params.id: ${req.params.id}`);
+    db.Event
+        .find({user_id: req.params.id},function (err, events) {
+            console.log(events);
+            res.json(events);
+        })
+
+}
+
+
 
 module.exports = {
     index: index,
     create: create,
-    show: show
+    show: show,
+    userEvents: userEvents
 }

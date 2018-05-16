@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 class Event extends Component {
         state={
@@ -17,15 +18,18 @@ class Event extends Component {
                     day: res.data.day,
                     time: res.data.time,
                     title: res.data.title,
-                })  
+                    user_id: this.props.match.params.user_id
+                })
+
             });  
         }
 
         onDelete = () => {
-            let oneEvent = this.props.match.params.id; 
-            axios.delete(`http://localhost:3001/events/${oneEvent}`, {data: {id: oneEvent}})
+            let oneEvent = this.props.match.params.id;
+            let userId= this.props.match.params.user_id;
+            axios.delete(`http://localhost:3001/users/${userId}/events/${oneEvent}`, {data: {id: oneEvent}})
                 .then(res => {
-                    this.props.history.push('/');
+                    this.props.history.push(`/users/${userId}/events`);
                 })
 
         }
@@ -39,8 +43,9 @@ class Event extends Component {
         onSave=(event)=>{
             event.preventDefault();
             const {title, day, time} = this.state;
-            let oneEvent = this.props.match.params.id; 
-            axios.put(`http://localhost:3001/events/${oneEvent}`, {title, day, time})
+            let oneEvent = this.props.match.params.id;
+            let userId= this.props.match.params.user_id;
+            axios.put(`http://localhost:3001/users/${userId}/events/${oneEvent}`, {title, day, time})
                 .then(res => {
                     let updatedEvent = res.data;
                     this.setState({
@@ -83,6 +88,7 @@ class Event extends Component {
                     </h1>
                     <button type="delete" onClick={this.onDelete}>Delete Event</button>
                     <button type="edit" onClick={this.onEdit}>Edit Event</button>
+                    <Link to={`/users/${this.props.match.params.user_id}/events`} className="btn btn-primary">Back to Calendar</Link>
                 </div>
                 )
             }

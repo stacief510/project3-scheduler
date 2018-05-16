@@ -9,7 +9,7 @@ export default(
 		<Switch>
             <Route exact path='/users' component={Home}></Route>
 			<Route exact path='/users/:id/events' component={CalendarContainer}></Route>
-			<Route exact path='/users/:id/events/:id' component={Event}></Route>
+			<Route exact path='/users/:user_id/events/:id' component={Event}></Route>
 		</Switch>
 	</div>
 )
