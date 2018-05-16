@@ -24,12 +24,16 @@ body {
 .title{
 	text-align: center;
 }
-button{
+button, .btn{
 	background-color: rgb(29, 116, 216);
 	color: #fff;	
 	border-radius: 5px;
 	padding: 5px;
 	margin-top: 10px;
+}
+.btn{
+	margin-top: 0;
+	padding-bottom: 4px;
 }
 label{
 	margin: 8px;

@@ -20,7 +20,8 @@ class CalendarContainer extends Component{
             showForm: false,
             title: '',
             day: '',
-            time: ''
+            time: '',
+            user_id:''
         }
     }
 
@@ -34,17 +35,20 @@ class CalendarContainer extends Component{
             saturday: [],
             sunday: [] 
         };
-        this.state.events.forEach((user,event) => {
+
+          this.state.events.forEach((event) => {
+            console.log(`event: ${event}`);
             let day = event.day
             let agenda = {};
 
             if (results[day]) {
+                console.log(`in if loop results[day]: ${results[day]}`);
                 let id = event._id;
-                let userId = user._id;
+                let userId = event.user_id;
                 let eventDetails = { 
                     pathname: `/users/${userId}/events/${id}`,
                   };
-                
+
                 agenda.title = <Link 
                     to={eventDetails}
                     >{event.title}</Link>;
@@ -65,11 +69,12 @@ class CalendarContainer extends Component{
     }
 
     componentDidMount(){
-        axios.get(`http://localhost:3001/users/${this.props.match.params.id}`)
+        axios.get(`http://localhost:3001/users/${this.props.match.params.id}/events`)
             .then((res)=>{
                 console.log(res.data)
                 this.setState({
-                    events: res.data
+                    events: res.data,
+                    user_id: this.props.match.params.id
                 })
                 this.massageData();
             }).then(() => {
@@ -82,8 +87,11 @@ class CalendarContainer extends Component{
 
     onSubmit=(event)=>{
         event.preventDefault();
-        const {title, day, time} = this.state;
-        axios.post('http://localhost:3001/events', {title, day, time})
+        const {title, day, time, user_id} = this.state;
+        let userId = this.state.user_id;
+        console.log(123, this.state)
+        console.log('this is it', userId);
+        axios.post(`http://localhost:3001/users/${userId}/events`, {title, day, time, user_id})
             .then(res => {
                 let createdEvent = res.data;
                 this.setState({
@@ -111,7 +119,6 @@ class CalendarContainer extends Component{
     }
 
     render(){
-
         let newEvent = this.state.showForm ? <NewEvent onSubmit={this.onSubmit} handleDayChange={this.handleDayChange} handleTimeChange={this.handleTimeChange} handleTitleChange={this.handleTitleChange} massageData={this.massageData} title={this.state.title} day={this.state.day} time={this.state.time}/> : null;
         return(
             <div className="calContainer">

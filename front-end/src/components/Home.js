@@ -22,6 +22,7 @@ class Home extends Component {
             <div className='users'>
                 <h2>Users</h2>
                 <ul className='users-user'>
+                    <img style={{width: "500px", height: "500px"}} src={"https://previews.123rf.com/images/dolgachov/dolgachov1702/dolgachov170200988/71148749-international-group-of-happy-people-holding-hands.jpg"}/>
                     {users}
                 </ul>
             </div>
@@ -33,7 +34,8 @@ class Home extends Component {
             .then((res) => {
                 this.setState({
                     users: res.data
-                })
+                });
+                console.log('users', this.state)
             })
 
     }

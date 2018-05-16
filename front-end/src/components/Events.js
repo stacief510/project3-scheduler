@@ -5,6 +5,7 @@ let days = [{ 0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursd
 class Events extends Component {
 
     render(){
+
         let result = this.props.events.map((item, idx) => {
             return(
                         <div className='calendar' key={idx}>

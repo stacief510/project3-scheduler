@@ -1,16 +1,5 @@
 var db = require('../models');
 
-function index(req, res){
-	console.log('GET event index')
-	db.Event.find({}, function(err, event){
-		if(err){
-			res.send(err);
-		}
-		return res.json(event);
-	});
-}
-
-
 function create(req, res){
 	console.log('POST event')
 	console.log(req.body)
@@ -22,7 +11,6 @@ function create(req, res){
 		res.json(event);
 	});
 }
-
 
 function show(req, res){
 	console.log('GET one event')
@@ -49,7 +37,6 @@ function update(req, res){
 	});
 }
 
-
 function destroy(req, res) {
     db.Event.findByIdAndRemove(req.params.id, function(err, foundEvent) {
         if (err) {
@@ -60,7 +47,6 @@ function destroy(req, res) {
 }
 
 module.exports = {
-	index: index,
 	create: create,
 	show: show,
 	update: update,
