@@ -32,7 +32,7 @@ var events = [{
                 }];
 
 var users=[{name: "Mark", age: 39, occupation:"Developer"},
-    {name: "Charlie", age: 3, occupation:"Loyal dog"}];
+    {name: "Charlie the Dog", age: 3, occupation:"Loyal dog"}];
 
 db.User.remove({}, function(err, removedUsers){
     db.User.create(users, function(err, createdUsers){
