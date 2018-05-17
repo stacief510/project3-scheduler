@@ -81,7 +81,6 @@ class CalendarContainer extends Component{
             }).then(() => {
                  
             })
-            // this.getCurrentDate();
     }
 
     toggleForm = () => {
