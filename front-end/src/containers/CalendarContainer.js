@@ -139,8 +139,10 @@ class CalendarContainer extends Component{
 
     render(){
         let testing = this.getCurrentDate();
-        let dateResults = testing[0].days.map(day => {
-            return <div className="col-sm days">{`${day._d}`}</div>
+        console.log(testing,'testing');
+        let dateResults = testing[0].days.map((day, idx) => {
+            let formatted = String(day._d).slice(0, 15)
+            return <div key={idx} className="col-sm days">{`${formatted}`}</div>
         })
         
         let newEvent = this.state.showForm ? <NewEvent onSubmit={this.onSubmit} handleDayChange={this.handleDayChange} handleTimeChange={this.handleTimeChange} handleTitleChange={this.handleTitleChange} massageData={this.massageData} title={this.state.title} day={this.state.day} time={this.state.time}/> : null;
