@@ -13,18 +13,21 @@ class Home extends Component {
         let users = this.state.users.map((user, i) => {
             let pathname = `/users/${user._id}/events`;
             return (
-                <li key={i}>
-                    <Link to={pathname}>{user.name}</Link>
-                </li>
+                <div key={i}>
+                    <Link className="user-links" to={pathname}>{user.name}</Link>
+                </div>
             )
         });
         return (
-            <div className='users'>
-                <h2>Users</h2>
-                <ul className='users-user'>
-                    <img style={{width: "500px", height: "500px"}} src={"https://previews.123rf.com/images/dolgachov/dolgachov1702/dolgachov170200988/71148749-international-group-of-happy-people-holding-hands.jpg"}/>
+            <div className='users-div'>
+                
+                    <img className="orgImg" style={{height: "500px"}} src={"https://wbnsema.org/wp-content/uploads/2015/03/get-organized-banner.jpg"}/>
+                    <h1 className="title">Weekly Scheduler</h1>
+                <div className='users-user'>
+                    
+                    <h3>Select a User</h3>
                     {users}
-                </ul>
+                </div>
             </div>
         );
     }
