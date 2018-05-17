@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, Switch, Route} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 import CalendarContainer from '../containers/CalendarContainer';
 import Event from '../components/Event';
 import Home from '../components/Home';

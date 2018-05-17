@@ -21,7 +21,7 @@ class Home extends Component {
         return (
             <div className='users-div'>
                 
-                    <img className="orgImg" style={{height: "500px"}} src={"https://wbnsema.org/wp-content/uploads/2015/03/get-organized-banner.jpg"}/>
+                    <img alt="logoImg" className="orgImg" style={{height: "500px"}} src={"https://wbnsema.org/wp-content/uploads/2015/03/get-organized-banner.jpg"}/>
                     <h1 className="title">Weekly Scheduler</h1>
                 <div className='users-user'>
                     

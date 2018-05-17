@@ -4,7 +4,6 @@ import axios from 'axios';
 import NewEvent from '../components/NewEvent';
 import Events from '../components/Events';
 import Moment from 'moment';
-import Moment2 from 'react-moment';
 
 class CalendarContainer extends Component{
 
@@ -76,8 +75,7 @@ class CalendarContainer extends Component{
                 console.log(res.data)
                 this.setState({
                     events: res.data,
-                    user_id: this.props.
-                    match.params.id
+                    user_id: this.props.match.params.id
                 })
                 this.massageData();
             }).then(() => {
@@ -141,21 +139,23 @@ class CalendarContainer extends Component{
         let testing = this.getCurrentDate();
         console.log(testing,'testing');
         let dateResults = testing[0].days.map((day, idx) => {
-            let formatted = String(day._d).slice(0, 15)
+            let formatted = String(day._d).slice(0, 10)
             return <div key={idx} className="col-sm days">{`${formatted}`}</div>
         })
         
         let newEvent = this.state.showForm ? <NewEvent onSubmit={this.onSubmit} handleDayChange={this.handleDayChange} handleTimeChange={this.handleTimeChange} handleTitleChange={this.handleTitleChange} massageData={this.massageData} title={this.state.title} day={this.state.day} time={this.state.time}/> : null;
         return(
             <div className="calContainer">
-                <h1 className='title'>Weekly Scheduler</h1>
-                <div className="calendar">
+                <h1 className='title2'>Weekly Scheduler 2018</h1>
+                <Link to="/users" className="BackToUsers"> &lt; Back to Users</Link>
+                
+                <div className="calendar2">
                     <div className="container">
                         <div className="row">
                             {dateResults}
                         </div>
 
-                        <div className="row">
+                        <div className="row eachEvent">
                             <div className="col-sm row2">
                                 <Events events={this.state.sunday} />
                             </div>

@@ -83,3 +83,23 @@ label{
 	color: #B6DDC9;
 	font-size: 20px;
 }
+.title2{
+	text-transform: uppercase;
+	text-align: center;
+	margin-top: 20px;
+}
+.eachEvent a{
+	color: #000;
+	justify-content: left;
+}
+.BackToUsers{
+	color: #000;
+	margin: auto;
+	font-weight: bold;
+}
+.calContainer{
+	text-align: center;
+}
+.calenda2{
+	margin-top: 20px;
+}
